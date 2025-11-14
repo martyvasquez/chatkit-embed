@@ -25,9 +25,10 @@ async def get_embed_config(
 
     host = extract_host(origin)
     allowed = [item.strip() for item in chat_app.allowed_domains.split(",") if item.strip()]
-    if not host or not is_domain_allowed(host, allowed):
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Unauthorized domain"
-        )
+    if allowed:
+        if not host or not is_domain_allowed(host, allowed):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="Unauthorized domain"
+            )
 
     return EmbedConfigResponse(options=json.loads(chat_app.options_json))

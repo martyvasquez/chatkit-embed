@@ -58,7 +58,6 @@ def serialize_options(raw: str) -> str:
 
 
 def parse_allowed_domains(raw: str) -> List[str]:
+    raw = raw or ""
     domains = [item.strip().lower() for item in raw.split(",") if item.strip()]
-    if not domains:
-        raise ValueError("At least one allowed domain is required.")
     return domains

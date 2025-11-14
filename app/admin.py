@@ -42,6 +42,7 @@ class ChatAppResource(Model):
             "allowed_domains",
             label="Allowed Domains",
             input_=inputs.TextArea(
+                help_text="Comma or newline separated. Leave blank to allow all domains.",
                 placeholder="example.com, blog.example.com",
             ),
         ),
