@@ -65,3 +65,7 @@ Log into `/admin` with the configured credentials and create Chat Apps. Each sav
 ## Tests
 
 Basic tests can be run with `pytest`. Install dev deps (`poetry install`) and execute `python -m pytest`.
+
+## Demo Mode
+
+For a zero-setup test, visit `/demo` (locally or on your Render deployment). It loads `static/embed.js` with `data-app-id="app_demo"`, which hits the API’s built-in demo ChatApp. You can use that to confirm the widget renders before touching the admin UI. The same `app_demo` ID works if you paste the script snippet into any HTML page pointing to your deployment.

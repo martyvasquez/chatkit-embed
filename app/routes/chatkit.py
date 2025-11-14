@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..chatkit import ChatKitError, create_chatkit_session
 from ..database import get_session
+from ..demo import get_demo_client_secret
 from ..domain import extract_host, is_domain_allowed
 from ..models import ChatApp
 from ..schemas import SessionRequest, SessionResponse
@@ -21,7 +22,10 @@ async def create_session(
     result = await session.execute(select(ChatApp).where(ChatApp.id == app_id))
     chat_app = result.scalar_one_or_none()
     if not chat_app or not chat_app.is_active:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="App not found")
+        demo_secret = get_demo_client_secret(app_id)
+        if not demo_secret:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="App not found")
+        return SessionResponse(client_secret=demo_secret)
 
     host = extract_host(str(payload.origin))
     allowed = [item.strip() for item in chat_app.allowed_domains.split(",") if item.strip()]

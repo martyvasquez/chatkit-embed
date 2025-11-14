@@ -2,12 +2,13 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse, RedirectResponse
 
 from .admin import init_admin
 from .config import get_settings
 from .database import init_db
+from .demo import demo_page
 from .routes import chatkit, embed
 
 settings = get_settings()
@@ -40,6 +41,11 @@ async def root():
             "docs_url": "/docs",
         }
     )
+
+
+@app.get("/demo", include_in_schema=False)
+async def demo():
+    return demo_page()
 
 
 @app.on_event("startup")

@@ -5,6 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_session
+from ..demo import get_demo_options
 from ..domain import extract_host, is_domain_allowed
 from ..models import ChatApp
 from ..schemas import EmbedConfigResponse
@@ -21,7 +22,10 @@ async def get_embed_config(
     result = await session.execute(select(ChatApp).where(ChatApp.id == app_id))
     chat_app = result.scalar_one_or_none()
     if not chat_app or not chat_app.is_active:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="App not found")
+        demo_options = get_demo_options(app_id)
+        if not demo_options:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="App not found")
+        return EmbedConfigResponse(options=demo_options)
 
     host = extract_host(origin)
     allowed = [item.strip() for item in chat_app.allowed_domains.split(",") if item.strip()]
