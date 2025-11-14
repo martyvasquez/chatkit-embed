@@ -44,6 +44,7 @@ class ChatAppResource(Model):
             input_=inputs.TextArea(
                 help_text="Comma or newline separated. Leave blank to allow all domains.",
                 placeholder="example.com, blog.example.com",
+                null=True,
             ),
         ),
         Field(
