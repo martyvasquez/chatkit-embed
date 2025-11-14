@@ -133,10 +133,7 @@ class ChatAppResource(Model):
 
         domains_raw = values.get("allowed_domains", "") or ""
         domains_normalized = domains_raw.replace("\n", ",")
-        try:
-            domains = parse_allowed_domains(domains_normalized)
-        except ValueError as exc:
-            raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+        domains = parse_allowed_domains(domains_normalized)
         values["allowed_domains"] = ",".join(domains)
 
         if is_create and not values.get("id"):
