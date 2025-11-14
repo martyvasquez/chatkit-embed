@@ -38,7 +38,6 @@ class ChatAppResource(Model):
         Field("id", label="App ID", input_=inputs.Input(placeholder="app_acme", null=True)),
         Field("name", label="Name"),
         Field("workflow_id", label="Workflow ID"),
-        Field("owner_id", label="Owner ID", input_=inputs.Input(null=True)),
         Field(
             "allowed_domains",
             label="Allowed Domains",

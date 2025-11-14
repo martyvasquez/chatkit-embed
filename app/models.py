@@ -13,5 +13,4 @@ class ChatApp(Base):
     openai_api_key_encrypted = Column(Text, nullable=False)
     allowed_domains = Column(Text, nullable=False)
     options_json = Column(Text, nullable=False)
-    owner_id = Column(String, nullable=True)
     is_active = Column(Boolean, default=True)

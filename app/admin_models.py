@@ -21,7 +21,6 @@ class ChatAppAdmin(models.Model):
     openai_api_key_encrypted = fields.TextField()
     allowed_domains = fields.TextField()
     options_json = fields.TextField()
-    owner_id = fields.CharField(max_length=64, null=True)
     is_active = fields.BooleanField(default=True)
 
     class Meta:
