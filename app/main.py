@@ -3,6 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse, RedirectResponse
 
 from .admin import init_admin
 from .config import get_settings
@@ -27,6 +28,18 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 app.include_router(embed.router)
 app.include_router(chatkit.router)
+
+
+@app.get("/", include_in_schema=False)
+async def root():
+    return JSONResponse(
+        {
+            "status": "ok",
+            "message": "ChatKit Embed Host is running.",
+            "admin_url": settings.admin_path,
+            "docs_url": "/docs",
+        }
+    )
 
 
 @app.on_event("startup")
