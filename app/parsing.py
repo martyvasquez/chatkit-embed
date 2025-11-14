@@ -45,8 +45,6 @@ def parse_options(raw: str) -> Dict[str, Any]:
         raise OptionsParseError(f"Invalid ChatKit options: {exc}") from exc
 
     data.pop("api", None)
-    if "theme" not in data:
-        raise OptionsParseError("Options must include a theme block.")
     if "composer" not in data and "startScreen" not in data:
         raise OptionsParseError("Options must include composer or startScreen.")
     return data

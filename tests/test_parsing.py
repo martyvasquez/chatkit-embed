@@ -21,10 +21,10 @@ def test_serialize_options_strips_api_section_and_handles_json5():
     assert data["composer"]["attachments"]["enabled"] is False
 
 
-def test_serialize_options_requires_theme():
+def test_serialize_options_requires_composer_or_start_screen():
     raw = """
     const options = {
-        startScreen: { title: "Hi" },
+        theme: { colorScheme: "dark" },
     };
     """
     with pytest.raises(OptionsParseError):
